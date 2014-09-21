@@ -1098,6 +1098,7 @@
 			// declare that plugin is in motion
 			slider.working = true;
 			// store the old index
+			var oldOldIndex = slider.oldIndex;
 			slider.oldIndex = slider.active.index;
 			// if slideIndex is less than zero, set active index to last child (this happens during infinite loop)
 			if(slideIndex < 0){
@@ -1112,6 +1113,9 @@
 			// onSlideBefore, onSlideNext, onSlidePrev callbacks
 			var returned = slider.settings.onSlideBefore(slider.children.eq(slider.active.index), slider.oldIndex, slider.active.index);
 			if (returned == false) {
+				slider.working = false;
+				slider.active.index = slider.oldIndex;
+				slider.oldIndex = oldOldIndex;
 				return;
 			}
 			if(direction == 'next'){
